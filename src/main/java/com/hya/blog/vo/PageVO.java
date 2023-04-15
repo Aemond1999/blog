@@ -10,7 +10,7 @@ import java.util.List;
 public class PageVO {
   private List rows;
   private Long total;
-  private Long  current;
-  private Long  size;
+  private Long current;
+  private Long size;
 
 }

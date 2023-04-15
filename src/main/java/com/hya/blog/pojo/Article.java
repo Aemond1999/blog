@@ -28,7 +28,7 @@ public class Article {
    @TableField( value = "create_time",fill = FieldFill.INSERT)
     private Date createTime;
     @TableField("create_by")
-    private String createBy;
+    private Long createBy;
     @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
     @TableField("update_by")
