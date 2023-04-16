@@ -1,7 +1,7 @@
 package com.hya.blog.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.hya.blog.pojo.MyUserDetails;
+import com.hya.blog.domain.pojo.MyUserDetails;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

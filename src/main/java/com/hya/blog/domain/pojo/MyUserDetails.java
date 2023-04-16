@@ -1,4 +1,4 @@
-package com.hya.blog.pojo;
+package com.hya.blog.domain.pojo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

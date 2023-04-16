@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hya.blog.mapper.ArticleMapper">
 
-<!--    <resultMap id="articleCategoryMap" type="com.hya.blog.pojo.Article">-->
+<!--    <resultMap id="articleCategoryMap" type="com.hya.blog.domain.pojo.Article">-->
 <!--        <id column="id" property="id"/>-->
 <!--        <result column="title" property="title"/>-->
 <!--        <result column="content" property="content"/>-->
@@ -16,10 +16,10 @@
 <!--        <result column="update_time" property="updateTime"/>-->
 <!--        <result column="is_top" property="top"/>-->
 <!--        <result column="view_count" property="viewCount"/>-->
-<!--        <association property="category" column="category_id" javaType="com.hya.blog.pojo.Category" select="com.hya.blog.mapper.CategoryMapper.selectById"/>-->
+<!--        <association property="category" column="category_id" javaType="com.hya.blog.domain.pojo.Category" select="com.hya.blog.mapper.CategoryMapper.selectById"/>-->
 <!--    </resultMap>-->
 
-<!--    <select id="selectByClassId" resultType="com.hya.blog.pojo.Article">-->
+<!--    <select id="selectByClassId" resultType="com.hya.blog.domain.pojo.Article">-->
 <!--        select * from article where category_id=#{id}-->
 <!--    </select>-->
 

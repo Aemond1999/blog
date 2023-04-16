@@ -1,4 +1,4 @@
-package com.hya.blog.vo;
+package com.hya.blog.domain.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

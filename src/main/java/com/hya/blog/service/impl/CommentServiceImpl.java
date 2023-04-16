@@ -4,17 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hya.blog.domain.dto.CommentDTO;
 import com.hya.blog.enums.HttpCodeEnum;
 import com.hya.blog.mapper.CommentMapper;
-import com.hya.blog.pojo.Article;
-import com.hya.blog.pojo.Comment;
-import com.hya.blog.pojo.User;
+import com.hya.blog.domain.pojo.Comment;
 import com.hya.blog.service.CommentService;
 import com.hya.blog.service.UserService;
 import com.hya.blog.utils.CopyBeanUtil;
 import com.hya.blog.utils.Result;
-import com.hya.blog.vo.CommentListVO;
-import com.hya.blog.vo.PageVO;
+import com.hya.blog.domain.vo.CommentVO;
+import com.hya.blog.domain.vo.PageVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,28 +37,29 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         //查询根评论
         LambdaQueryWrapper<Comment> lqw = new LambdaQueryWrapper<>();
         lqw.eq(Comment::getArticleId, id).eq(Comment::getRootId, -1);
-        List<CommentListVO> oldCommentListVOs = CopyBeanUtil.copyBeanList(commentService.page(page, lqw).getRecords(), CommentListVO.class);
-        List<CommentListVO> newCommentListVOs = oldCommentListVOs.stream()
+        List<CommentVO> oldCommentVOS = CopyBeanUtil.copyBeanList(commentService.page(page, lqw).getRecords(), CommentVO.class);
+        List<CommentVO> newCommentVOS = oldCommentVOS.stream()
                 .map(s -> {
                     s.setUserName(userService.getUserById(s.getCreateBy()).getUsername());
                     //查询子评论
                     List<Comment> children = commentService.list(new LambdaQueryWrapper<Comment>().eq(Comment::getRootId, s.getId()));
-                    List<CommentListVO> childCommentListVOs = CopyBeanUtil.copyBeanList(children, CommentListVO.class)
+                    List<CommentVO> childCommentVOS = CopyBeanUtil.copyBeanList(children, CommentVO.class)
                             .stream().map(c -> {
                                 c.setToCommentUserName(userService.getUserById(c.getToCommentUserId()).getUsername());
                                 c.setUserName(userService.getUserById(c.getCreateBy()).getUsername());
                                 return c;
                             }).collect(Collectors.toList());
-                    s.setChildren(childCommentListVOs);
+                    s.setChildren(childCommentVOS);
                     return s;
                 }).collect(Collectors.toList());
 
-        PageVO pageVO = new PageVO(newCommentListVOs, commentService.count(), current, size);
+        PageVO pageVO = new PageVO(newCommentVOS, commentService.count(), current, size);
         return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), pageVO);
     }
 
     @Override
-    public Result sendOrReplyComment(Comment comment) {
+    public Result sendOrReplyComment(CommentDTO commentDTO) {
+        Comment comment = CopyBeanUtil.copyBean(commentDTO, Comment.class);
         boolean flag= commentService.save(comment);
        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(),flag);
     }

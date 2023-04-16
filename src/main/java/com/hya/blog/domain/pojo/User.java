@@ -1,4 +1,4 @@
-package com.hya.blog.pojo;
+package com.hya.blog.domain.pojo;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -8,29 +8,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
-@TableName(value = "category")
-public class Category {
+@TableName("user")
+public class User {
     @TableId
     private Long id;
-    @TableField("pid")
-    private Long pid;
-    @TableField("category_name")
-    private String categoryName;
+    @TableField("username")
+    private String username;
+    @TableField("password")
+    private String password;
     @TableField("status")
     private Boolean status;
     @TableField("deleted")
     private Boolean deleted;
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-    @TableField( value = "create_by",fill = FieldFill.INSERT)
+    @TableField("create_by")
     private Long createBy;
     @TableField(value = "update_time",fill=FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
-    @TableField(value = "update_by",fill=FieldFill.INSERT_UPDATE)
-    private Long updateBy;
+    @TableField("update_by")
+    private String updateBy;
 }

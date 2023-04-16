@@ -1,7 +1,7 @@
 package com.hya.blog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hya.blog.pojo.User;
+import com.hya.blog.domain.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

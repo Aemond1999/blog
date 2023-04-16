@@ -1,16 +1,9 @@
 package com.hya.blog.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hya.blog.mapper.ArticleMapper;
-import com.hya.blog.pojo.Article;
 import com.hya.blog.service.ArticleService;
 import com.hya.blog.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/article")

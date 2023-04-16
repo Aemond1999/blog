@@ -1,31 +1,26 @@
-package com.hya.blog.pojo;
+package com.hya.blog.domain.pojo;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+
 @Data
 @NoArgsConstructor
-@TableName(value = "article")
-public class Article {
+public class Comment {
     @TableId
     private Long id;
-    @TableField("title")
-    private String title;
+    @TableField("article_id")
+    private Long articleId;
+    @TableField("root_id")
+    private Long rootId;
     @TableField("content")
     private String content;
-    @TableField("category_id")
-    private Long categoryId;
-    @TableField("is_top")
-    private Boolean top;
-    @TableField("status")
-    private Boolean status;
     @TableField("deleted")
     private Boolean deleted;
-    @TableField("view_count")
-    private Long viewCount;
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
     @TableField( value = "create_by",fill = FieldFill.INSERT)
@@ -34,4 +29,9 @@ public class Article {
     private LocalDateTime updateTime;
     @TableField(value = "update_by",fill=FieldFill.INSERT_UPDATE)
     private Long updateBy;
+    @TableField("to_comment_user_id")
+    private Long toCommentUserId;
+    @TableField("to_comment_id")
+    private Long toCommentId;
+
 }

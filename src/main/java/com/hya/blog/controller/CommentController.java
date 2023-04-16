@@ -1,6 +1,6 @@
 package com.hya.blog.controller;
 
-import com.hya.blog.pojo.Comment;
+import com.hya.blog.domain.dto.CommentDTO;
 import com.hya.blog.service.CommentService;
 import com.hya.blog.utils.Result;
 
@@ -18,8 +18,8 @@ public class CommentController {
         return commentService.commentList(current,size,id);
     }
     @PostMapping("/test2")
-    public  Result test2(@RequestBody Comment comment){
-        return commentService.sendOrReplyComment(comment);
+    public  Result test2(@RequestBody CommentDTO commentDTO){
+        return commentService.sendOrReplyComment(commentDTO);
     }
 
 }

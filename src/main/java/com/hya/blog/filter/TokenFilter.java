@@ -1,9 +1,9 @@
 package com.hya.blog.filter;
 import com.alibaba.fastjson.JSON;
-import com.hya.blog.pojo.MyUserDetails;
+import com.hya.blog.domain.pojo.MyUserDetails;
 import com.hya.blog.utils.JwtUtil;
 import com.hya.blog.utils.RedisCache;
-import com.hya.blog.vo.UserVO;
+import com.hya.blog.domain.pojo.UserInToken;
 import io.jsonwebtoken.Claims;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +34,16 @@ public class TokenFilter extends OncePerRequestFilter {
         }
         //解析token
         String user;
-        UserVO userVO;
+        UserInToken userInToken;
         try {
             Claims claims = JwtUtil.parseJWT(token);
             user = claims.getSubject();
-             userVO = JSON.parseObject(user, UserVO.class);
+            userInToken = JSON.parseObject(user, UserInToken.class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("非法token");
         }
-       MyUserDetails userDetails= redisCache.getCacheObject("login:"+userVO.getUsername());
+       MyUserDetails userDetails= redisCache.getCacheObject("login:"+ userInToken.getUsername());
         if (userDetails==null){
             throw new RuntimeException("用户未登录");
         }

@@ -1,6 +1,6 @@
 package com.hya.blog.controller;
 
-import com.hya.blog.pojo.User;
+import com.hya.blog.domain.pojo.User;
 import com.hya.blog.service.UserService;
 import com.hya.blog.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;

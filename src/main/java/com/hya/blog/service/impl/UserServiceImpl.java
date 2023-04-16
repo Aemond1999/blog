@@ -6,14 +6,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hya.blog.constant.Constant;
 import com.hya.blog.enums.HttpCodeEnum;
 import com.hya.blog.mapper.UserMapper;
-import com.hya.blog.pojo.MyUserDetails;
-import com.hya.blog.pojo.User;
+import com.hya.blog.domain.pojo.MyUserDetails;
+import com.hya.blog.domain.pojo.User;
 import com.hya.blog.service.UserService;
 import com.hya.blog.utils.CopyBeanUtil;
 import com.hya.blog.utils.JwtUtil;
 import com.hya.blog.utils.RedisCache;
 import com.hya.blog.utils.Result;
-import com.hya.blog.vo.UserVO;
+import com.hya.blog.domain.pojo.UserInToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,11 +48,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         //获取authentication中封装的用户信息
         MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-        UserVO userVO = CopyBeanUtil.copyBean(userDetails.getUser(), UserVO.class);
-        String json = JSON.toJSONString(userVO);
+        UserInToken userInToken = CopyBeanUtil.copyBean(userDetails.getUser(), UserInToken.class);
+        String json = JSON.toJSONString(userInToken);
         //使用userid和name生成token
         String jwt = JwtUtil.createJWT(json);
-        redisCache.setCacheObject("login:" + userVO.getUsername(), userDetails);
+        redisCache.setCacheObject("login:" + userInToken.getUsername(), userDetails);
         HashMap<String, String> map = new HashMap<>();
         map.put("token", jwt);
         return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), map);
@@ -78,11 +78,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public UserVO getUserById(Long id) {
+    public UserInToken getUserById(Long id) {
         LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
         lqw.eq(User::getStatus, Constant.USER_STATUS_NORMAL).eq(User::getId, id);
         User user = userService.getOne(lqw);
-        return CopyBeanUtil.copyBean(user, UserVO.class);
+        return CopyBeanUtil.copyBean(user, UserInToken.class);
     }
 
 

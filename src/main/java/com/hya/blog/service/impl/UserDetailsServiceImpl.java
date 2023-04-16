@@ -1,8 +1,8 @@
 package com.hya.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.hya.blog.pojo.MyUserDetails;
-import com.hya.blog.pojo.User;
+import com.hya.blog.domain.pojo.MyUserDetails;
+import com.hya.blog.domain.pojo.User;
 import com.hya.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
