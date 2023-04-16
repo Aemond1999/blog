@@ -1,6 +1,10 @@
 spring:
   main:
     banner-mode: off
+  redis:
+    database: 3
+    host: localhost
+    port: 6379
   datasource:
     druid:
       driver-class-name: com.mysql.jdbc.Driver

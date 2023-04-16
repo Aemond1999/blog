@@ -13,7 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>blog</name>
     <description>blog</description>
-
+    <!--添加依赖-->
     <dependencies>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -55,10 +55,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -80,7 +80,6 @@
             <version>2.3.1</version>
         </dependency>
     </dependencies>
-
 
 
 </project>

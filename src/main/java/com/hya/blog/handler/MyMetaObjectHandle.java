@@ -1,7 +1,10 @@
 package com.hya.blog.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.hya.blog.pojo.MyUserDetails;
 import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -17,13 +20,17 @@ public class MyMetaObjectHandle implements MetaObjectHandler {
 
         metaObject.setValue("createTime", LocalDateTime.now());
         metaObject.setValue("updateTime", LocalDateTime.now());
-//        metaObject.setValue("createUser", BaseContextUtils.getCurrentId());
-//        metaObject.setValue("updateUser", BaseContextUtils.getCurrentId());
+        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+       metaObject.setValue("createBy", userDetails.getUser().getId());
+      metaObject.setValue("updateBy",userDetails.getUser().getId());
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
+        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
         metaObject.setValue("updateTime", LocalDateTime.now());
-//        metaObject.setValue("updateUser", BaseContextUtils.getCurrentId());
+        metaObject.setValue("updateUser",userDetails.getUser().getId());
     }
 }

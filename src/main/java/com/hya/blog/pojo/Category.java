@@ -27,10 +27,10 @@ public class Category {
     private Boolean deleted;
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-    @TableField("create_by")
+    @TableField( value = "create_by",fill = FieldFill.INSERT)
     private Long createBy;
     @TableField(value = "update_time",fill=FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
-    @TableField("update_by")
-    private String updateBy;
+    @TableField(value = "update_by",fill=FieldFill.INSERT_UPDATE)
+    private Long updateBy;
 }
