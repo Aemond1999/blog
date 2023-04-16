@@ -11,7 +11,7 @@ import com.hya.blog.service.ArticleService;
 import com.hya.blog.service.CategoryService;
 import com.hya.blog.utils.CopyBeanUtil;
 import com.hya.blog.utils.Result;
-import com.hya.blog.vo.CategoryListVO;
+import com.hya.blog.common.vo.CategoryListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

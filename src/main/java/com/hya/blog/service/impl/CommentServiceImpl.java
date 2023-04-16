@@ -12,8 +12,8 @@ import com.hya.blog.service.CommentService;
 import com.hya.blog.service.UserService;
 import com.hya.blog.utils.CopyBeanUtil;
 import com.hya.blog.utils.Result;
-import com.hya.blog.vo.CommentVO;
-import com.hya.blog.vo.PageVO;
+import com.hya.blog.common.vo.CommentVO;
+import com.hya.blog.common.vo.PageVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

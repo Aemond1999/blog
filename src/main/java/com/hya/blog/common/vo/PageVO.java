@@ -1,4 +1,4 @@
-package com.hya.blog.vo;
+package com.hya.blog.common.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
