@@ -46,7 +46,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 //根据文章ID获取文章内容
     @Override
     public Result getArticleContent(Long id) {
-        LambdaQueryWrapper<Article> lqw=new LambdaQueryWrapper<>();
         Article article = articleService.getById(id);
         return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), CopyBeanUtil.copyBean(article, ArticleContentVO.class));
     }
