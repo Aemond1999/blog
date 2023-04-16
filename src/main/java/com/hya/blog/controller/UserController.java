@@ -1,6 +1,6 @@
 package com.hya.blog.controller;
 
-import com.hya.blog.domain.pojo.User;
+import com.hya.blog.common.domain.UserDO;
 import com.hya.blog.service.UserService;
 import com.hya.blog.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +13,13 @@ public class UserController {
     @Autowired
     UserService userService;
     @PostMapping("/login")
-    Result login(@RequestBody User user){
-      return   userService.login(user);
+    Result login(@RequestBody UserDO userDO){
+      return   userService.login(userDO);
     }
 
     @PostMapping("/register")
-    Result register(@RequestBody User user){
-        return userService.register(user);
+    Result register(@RequestBody UserDO userDO){
+        return userService.register(userDO);
     }
 
 

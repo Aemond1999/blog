@@ -1,4 +1,4 @@
-package com.hya.blog.domain.dto;
+package com.hya.blog.common.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

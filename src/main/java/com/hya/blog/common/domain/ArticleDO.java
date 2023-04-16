@@ -1,4 +1,4 @@
-package com.hya.blog.domain.pojo;
+package com.hya.blog.common.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @TableName(value = "article")
-public class Article {
+public class ArticleDO {
     @TableId
     private Long id;
     @TableField("title")

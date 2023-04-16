@@ -1,5 +1,6 @@
-package com.hya.blog.domain.pojo;
+package com.hya.blog.common.pojo;
 
+import com.hya.blog.common.domain.UserDO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,11 +11,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class MyUserDetails implements UserDetails {
-    User user;
+    UserDO userDO;
     private List<String> permissions;
 
-    public MyUserDetails(User user, List<String> permissions) {
-        this.user = user;
+    public MyUserDetails(UserDO userDO, List<String> permissions) {
+        this.userDO = userDO;
         this.permissions = permissions;
     }
 
@@ -25,12 +26,12 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return userDO.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return userDO.getUsername();
     }
 
     @Override
@@ -40,7 +41,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return user.getStatus();
+        return userDO.getStatus();
     }
 
     @Override

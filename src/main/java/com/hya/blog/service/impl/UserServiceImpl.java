@@ -6,14 +6,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hya.blog.constant.Constant;
 import com.hya.blog.enums.HttpCodeEnum;
 import com.hya.blog.mapper.UserMapper;
-import com.hya.blog.domain.pojo.MyUserDetails;
-import com.hya.blog.domain.pojo.User;
+import com.hya.blog.common.pojo.MyUserDetails;
+import com.hya.blog.common.domain.UserDO;
 import com.hya.blog.service.UserService;
 import com.hya.blog.utils.CopyBeanUtil;
 import com.hya.blog.utils.JwtUtil;
 import com.hya.blog.utils.RedisCache;
 import com.hya.blog.utils.Result;
-import com.hya.blog.domain.pojo.UserInToken;
+import com.hya.blog.common.bo.UserInTokenBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +28,7 @@ import java.util.Objects;
 
 @Transactional
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements UserService {
     @Autowired
     UserService userService;
     @Autowired
@@ -38,9 +38,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     //登录
     @Override
-    public Result login(User user) {
+    public Result login(UserDO userDO) {
         //封装Authentication对象
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDO.getUsername(), userDO.getPassword());
         //调用authenticate进行认证
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         if (Objects.isNull(authentication)) {
@@ -48,11 +48,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         //获取authentication中封装的用户信息
         MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-        UserInToken userInToken = CopyBeanUtil.copyBean(userDetails.getUser(), UserInToken.class);
-        String json = JSON.toJSONString(userInToken);
+        UserInTokenBO userInTokenBO = CopyBeanUtil.copyBean(userDetails.getUserDO(), UserInTokenBO.class);
+        String json = JSON.toJSONString(userInTokenBO);
         //使用userid和name生成token
         String jwt = JwtUtil.createJWT(json);
-        redisCache.setCacheObject("login:" + userInToken.getUsername(), userDetails);
+        redisCache.setCacheObject("login:" + userInTokenBO.getUsername(), userDetails);
         HashMap<String, String> map = new HashMap<>();
         map.put("token", jwt);
         return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), map);
@@ -60,11 +60,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     //注册用户
     @Override
-    public Result register(User user) {
+    public Result register(UserDO userDO) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String password = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(password);
-        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), userService.save(user));
+        String password = bCryptPasswordEncoder.encode(userDO.getPassword());
+        userDO.setPassword(password);
+        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), userService.save(userDO));
     }
 
     //注销用户
@@ -72,17 +72,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result logout() {
         UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-        String userId = userDetails.getUser().getUsername();
+        String userId = userDetails.getUserDO().getUsername();
         redisCache.deleteObject("login:" + userId);
         return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), true);
     }
 
     @Override
-    public UserInToken getUserById(Long id) {
-        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(User::getStatus, Constant.USER_STATUS_NORMAL).eq(User::getId, id);
-        User user = userService.getOne(lqw);
-        return CopyBeanUtil.copyBean(user, UserInToken.class);
+    public UserInTokenBO getUserById(Long id) {
+        LambdaQueryWrapper<UserDO> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(UserDO::getStatus, Constant.USER_STATUS_NORMAL).eq(UserDO::getId, id);
+        UserDO userDO = userService.getOne(lqw);
+        return CopyBeanUtil.copyBean(userDO, UserInTokenBO.class);
     }
 
 

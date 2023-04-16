@@ -1,12 +1,11 @@
-package com.hya.blog.domain.dto;
+package com.hya.blog.common.bo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserLoginDTO {
+public class UserInTokenBO {
     private Long id;
     private String username;
-
 }

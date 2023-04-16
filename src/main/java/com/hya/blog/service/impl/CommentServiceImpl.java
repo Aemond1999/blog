@@ -4,16 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hya.blog.domain.dto.CommentDTO;
+import com.hya.blog.common.dto.CommentDTO;
 import com.hya.blog.enums.HttpCodeEnum;
 import com.hya.blog.mapper.CommentMapper;
-import com.hya.blog.domain.pojo.Comment;
+import com.hya.blog.common.domain.CommentDO;
 import com.hya.blog.service.CommentService;
 import com.hya.blog.service.UserService;
 import com.hya.blog.utils.CopyBeanUtil;
 import com.hya.blog.utils.Result;
-import com.hya.blog.domain.vo.CommentVO;
-import com.hya.blog.domain.vo.PageVO;
+import com.hya.blog.vo.CommentVO;
+import com.hya.blog.vo.PageVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Transactional
 @Service
-public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
+public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> implements CommentService {
     @Autowired
     UserService userService;
     @Autowired
@@ -33,16 +33,16 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     //获取文章下的评论评论
     @Override
     public Result commentList(Long current, Long size, Long id) {
-        IPage<Comment> page = new Page<>(current, size);
+        IPage<CommentDO> page = new Page<>(current, size);
         //查询根评论
-        LambdaQueryWrapper<Comment> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(Comment::getArticleId, id).eq(Comment::getRootId, -1);
+        LambdaQueryWrapper<CommentDO> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(CommentDO::getArticleId, id).eq(CommentDO::getRootId, -1);
         List<CommentVO> oldCommentVOS = CopyBeanUtil.copyBeanList(commentService.page(page, lqw).getRecords(), CommentVO.class);
         List<CommentVO> newCommentVOS = oldCommentVOS.stream()
                 .map(s -> {
                     s.setUserName(userService.getUserById(s.getCreateBy()).getUsername());
                     //查询子评论
-                    List<Comment> children = commentService.list(new LambdaQueryWrapper<Comment>().eq(Comment::getRootId, s.getId()));
+                    List<CommentDO> children = commentService.list(new LambdaQueryWrapper<CommentDO>().eq(CommentDO::getRootId, s.getId()));
                     List<CommentVO> childCommentVOS = CopyBeanUtil.copyBeanList(children, CommentVO.class)
                             .stream().map(c -> {
                                 c.setToCommentUserName(userService.getUserById(c.getToCommentUserId()).getUsername());
@@ -59,8 +59,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public Result sendOrReplyComment(CommentDTO commentDTO) {
-        Comment comment = CopyBeanUtil.copyBean(commentDTO, Comment.class);
-        boolean flag= commentService.save(comment);
+        CommentDO commentDO = CopyBeanUtil.copyBean(commentDTO, CommentDO.class);
+        boolean flag= commentService.save(commentDO);
        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(),flag);
     }
 

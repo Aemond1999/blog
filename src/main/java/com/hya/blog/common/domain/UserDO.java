@@ -1,4 +1,4 @@
-package com.hya.blog.domain.pojo;
+package com.hya.blog.common.domain;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @TableName("user")
-public class User {
+public class UserDO {
     @TableId
     private Long id;
     @TableField("username")

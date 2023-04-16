@@ -1,6 +1,6 @@
 package com.hya.blog.controller;
 
-import com.hya.blog.domain.dto.CommentDTO;
+import com.hya.blog.common.dto.CommentDTO;
 import com.hya.blog.service.CommentService;
 import com.hya.blog.utils.Result;
 

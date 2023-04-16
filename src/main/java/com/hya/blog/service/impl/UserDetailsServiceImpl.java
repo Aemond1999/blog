@@ -1,8 +1,8 @@
 package com.hya.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.hya.blog.domain.pojo.MyUserDetails;
-import com.hya.blog.domain.pojo.User;
+import com.hya.blog.common.pojo.MyUserDetails;
+import com.hya.blog.common.domain.UserDO;
 import com.hya.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,16 +20,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //根据用户名查询用户信息
-        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(User::getUsername,username);
-        User user = userService.getOne(lqw);
+        LambdaQueryWrapper<UserDO> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(UserDO::getUsername,username);
+        UserDO userDO = userService.getOne(lqw);
         //如果查询不到数据就通过抛出异常来给出提示
-        if(Objects.isNull(user)){
+        if(Objects.isNull(userDO)){
             throw new RuntimeException("用户名或密码错误");
         }
         //根据用户查询权限信息 添加到LoginUser中
         //封装成UserDetails对象返回
-        return new MyUserDetails(user,null);
+        return new MyUserDetails(userDO,null);
 
     }
 }

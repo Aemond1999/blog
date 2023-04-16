@@ -1,11 +1,11 @@
-package com.hya.blog.domain.pojo;
+package com.hya.blog.vo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserInToken {
+public class CategoryListVO {
     private Long id;
-    private String username;
+    private String categoryName;
 }
