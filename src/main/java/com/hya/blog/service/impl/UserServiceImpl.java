@@ -3,6 +3,7 @@ package com.hya.blog.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hya.blog.common.dto.UserInfoDTO;
 import com.hya.blog.constant.Constant;
 import com.hya.blog.enums.HttpCodeEnum;
 import com.hya.blog.mapper.UserMapper;
@@ -14,6 +15,7 @@ import com.hya.blog.utils.JwtUtil;
 import com.hya.blog.utils.RedisCache;
 import com.hya.blog.utils.Result;
 import com.hya.blog.common.bo.UserInTokenBO;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
 
     //注册用户
     @Override
-    public Result register(UserDO userDO) {
+    public Result register(@NotNull UserDO userDO) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String password = bCryptPasswordEncoder.encode(userDO.getPassword());
         userDO.setPassword(password);
@@ -77,6 +79,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), true);
     }
 
+    //展示用户个人信息
+    @Override
+    public Result getUserInfoById(Long id) {
+        UserDO userDO= userService.getById(id);
+        UserInfoDTO userInfoDTO = CopyBeanUtil.copyBean(userDO, UserInfoDTO.class);
+        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), userInfoDTO);
+    }
+//获取用户名和ID
     @Override
     public UserInTokenBO getUserById(Long id) {
         LambdaQueryWrapper<UserDO> lqw = new LambdaQueryWrapper<>();

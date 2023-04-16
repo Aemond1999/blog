@@ -9,7 +9,10 @@ public interface UserService extends IService<UserDO> {
     Result login(UserDO userDO);
     Result register(UserDO userDO);
     UserInTokenBO getUserById(Long id);
-
     Result logout();
+
+    Result getUserInfoById(Long id);
+
+
 
 }
