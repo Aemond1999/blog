@@ -24,7 +24,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -85,20 +84,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     //展示用户个人信息
     @Override
     public Result getUserInfoById(Long id) {
-        UserDO userDO= userService.getById(id);
+        UserDO userDO = userService.getById(id);
         UserInfoDTO userInfoDTO = CopyBeanUtil.copyBean(userDO, UserInfoDTO.class);
-        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), userInfoDTO);
+        return Result.okResult(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), userInfoDTO);
     }
 
     @Override
     public Result updateUserInfo(UserInfoDTO userInfoDTO) {
         boolean flag = userService.updateById(CopyBeanUtil.copyBean(userInfoDTO, UserDO.class));
-        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), flag);
+        if (flag) {
+            return Result.okResult(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg());
+        } else {
+            return Result.failResult(HttpCodeEnum.FAIL.getCode(), HttpCodeEnum.FAIL.getMsg());
+        }
     }
+
 
     @Override
     public Boolean updateAvatar(String avatar, Long id) {
-        return userMapper.updateAvatar(avatar,id);
+        return userMapper.updateAvatar(avatar, id);
     }
 
 

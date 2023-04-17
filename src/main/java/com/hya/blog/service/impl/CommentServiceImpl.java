@@ -54,14 +54,19 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> im
                 }).collect(Collectors.toList());
 
         PageVO pageVO = new PageVO(newCommentVOS, commentService.count(), current, size);
-        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), pageVO);
+        return  Result.okResult(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), pageVO);
     }
 
     @Override
     public Result sendOrReplyComment(CommentDTO commentDTO) {
         CommentDO commentDO = CopyBeanUtil.copyBean(commentDTO, CommentDO.class);
         boolean flag= commentService.save(commentDO);
-       return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(),flag);
+        if (flag){
+            return Result.okResult(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg());
+        }else {
+            return Result.failResult(HttpCodeEnum.FAIL.getCode(), HttpCodeEnum.FAIL.getMsg());
+        }
+
     }
 
 

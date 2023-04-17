@@ -38,12 +38,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDO> im
         IPage<ArticleDO> pageNow = articleService.page(pageAll, lqw);
         List<ArticleListByClassIdVO> articleListByClassIdVOs = CopyBeanUtil.copyBeanList(pageNow.getRecords(), ArticleListByClassIdVO.class);
         PageVO pageVO=new PageVO(articleListByClassIdVOs,pageNow.getTotal(),pageNow.getCurrent(),pageNow.getSize());
-        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), pageVO);
+        return  Result.okResult(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), pageVO);
     }
 //根据文章ID获取文章内容
     @Override
     public Result getArticleContent(Long id) {
         ArticleDO articleDO = articleService.getById(id);
-        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), CopyBeanUtil.copyBean(articleDO, ArticleContentVO.class));
+        return Result.okResult(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), CopyBeanUtil.copyBean(articleDO, ArticleContentVO.class));
     }
 }

@@ -6,7 +6,10 @@ public enum HttpCodeEnum {
     NEED_LOGIN(401,"需要登录"),
     NO_OPERATOR_AUH(403,"无权限操作"),
     USERNAME_EXIST(403,"用户名已存在"),
-    LOGIN_ERROR(505,"用户名或密码错误");
+    LOGIN_ERROR(505,"用户名或密码错误"),
+    FAIL(400,"操作失败"),
+    UNSUPPORTED_MEDIA_TYPE(415,"格式错误");
+
 
     private int code;
     private String msg;

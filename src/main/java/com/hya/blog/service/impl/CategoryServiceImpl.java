@@ -27,6 +27,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryDO>
     CategoryService categoryService;
     @Autowired
     ArticleService articleService;
+    //返回目录ID和名称
     @Override
     public Result categoryList() {
         LambdaQueryWrapper<ArticleDO> alqw=new LambdaQueryWrapper<>();
@@ -40,7 +41,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryDO>
         List<CategoryDO> categories = categoryService.listByIds(collectIds);
         //转换成VO
         List<CategoryListVO> categoryListVOs = CopyBeanUtil.copyBeanList(categories, CategoryListVO.class);
-        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), categoryListVOs);
+        return Result.okResult(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), categoryListVOs);
     }
     //返回所有目录名称
 }

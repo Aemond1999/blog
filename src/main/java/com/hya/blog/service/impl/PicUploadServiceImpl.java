@@ -53,7 +53,7 @@ public class PicUploadServiceImpl implements PicUploadService {
             }
         }
         if (!flag) {
-            return new Result(507, "格式错误", null);
+            return Result.failResult(HttpCodeEnum.UNSUPPORTED_MEDIA_TYPE.getCode(),HttpCodeEnum.UNSUPPORTED_MEDIA_TYPE.getMsg());
         }
         //构造一个带指定Region对象的配置类
         Configuration cfg = new Configuration(Region.autoRegion());
@@ -74,7 +74,7 @@ public class PicUploadServiceImpl implements PicUploadService {
                 MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
                 Long id = userDetails.getUserDO().getId();
                 userService.updateAvatar(urlPrefix + key, id);
-                return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), urlPrefix + key);
+                return  Result.okResult(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), urlPrefix + key);
 
             } catch (QiniuException ex) {
                 Response r = ex.response;
@@ -91,7 +91,7 @@ public class PicUploadServiceImpl implements PicUploadService {
             throw new RuntimeException(e);
         }
 
-        return new Result(404, null, null);
+     return Result.failResult(HttpCodeEnum.FAIL.getCode(), HttpCodeEnum.FAIL.getMsg());
     }
 
 
