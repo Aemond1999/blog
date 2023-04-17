@@ -24,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -37,6 +38,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     private AuthenticationManager authenticationManager;
     @Autowired
     private RedisCache redisCache;
+    @Autowired
+    UserMapper userMapper;
 
     //登录
     @Override
@@ -86,7 +89,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         UserInfoDTO userInfoDTO = CopyBeanUtil.copyBean(userDO, UserInfoDTO.class);
         return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), userInfoDTO);
     }
-//获取用户名和ID
+
+    @Override
+    public Result updateUserInfo(UserInfoDTO userInfoDTO) {
+        boolean flag = userService.updateById(CopyBeanUtil.copyBean(userInfoDTO, UserDO.class));
+        return new Result(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), flag);
+    }
+
+    @Override
+    public Boolean updateAvatar(String avatar, Long id) {
+        return userMapper.updateAvatar(avatar,id);
+    }
+
+
+    //获取用户名和ID
     @Override
     public UserInTokenBO getUserById(Long id) {
         LambdaQueryWrapper<UserDO> lqw = new LambdaQueryWrapper<>();

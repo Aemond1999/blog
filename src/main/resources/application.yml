@@ -27,3 +27,9 @@ mybatis-plus:
       logic-delete-value: 1
 server:
   port: 8888
+
+qiniu:
+  accessKeyId: DYndLkz5jc9RnM_xgqiV77t9SLA0f-OaOvn3HjXS
+  secretKey: xjMEgiWzRPxUTaaGmq-BbLCulAO9jgLa70oXZ0Dl
+  urlPrefix: http://rt9mxmck5.hd-bkt.clouddn.com/
+  bucket: hya-blog-resource
