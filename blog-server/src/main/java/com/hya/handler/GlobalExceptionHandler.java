@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public Result handleHttpMessageNotReadableException(
             MissingServletRequestParameterException ex) {
-        return new Result(null,false, HttpCodeEnum.MISS_PARAM.getCode(), HttpCodeEnum.MISS_PARAM.getMsg());
+        return Result.fail( HttpCodeEnum.MISS_PARAM.getCode(), HttpCodeEnum.MISS_PARAM.getMsg());
     }
 
     /**
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NullPointerException.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handleTypeMismatchException(NullPointerException ex) {
-        return new Result(null,false,HttpCodeEnum.NULL_POINTER.getCode(), HttpCodeEnum.NULL_POINTER.getMsg());
+        return Result.fail(HttpCodeEnum.NULL_POINTER.getCode(), HttpCodeEnum.NULL_POINTER.getMsg());
     }
 
     /**
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handleUnexpectedServer(Exception ex) {
 
-        return new Result(null,false,HttpCodeEnum.SYSTEM_ERROR.getCode(), HttpCodeEnum.SYSTEM_ERROR.getMsg());
+        return Result.fail(HttpCodeEnum.SYSTEM_ERROR.getCode(), HttpCodeEnum.SYSTEM_ERROR.getMsg());
 
     }
 
