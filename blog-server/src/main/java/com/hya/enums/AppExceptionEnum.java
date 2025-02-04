@@ -1,12 +1,10 @@
 package com.hya.enums;
 
-public enum MybatisCodeEnum {
+public enum AppExceptionEnum {
 
 
     DELETE_FAIL(500,"删除失败"),
     UPDATE_FAIL(500,"修改失败");
-
-
 
     /**
      * 状态码
@@ -18,7 +16,7 @@ public enum MybatisCodeEnum {
      */
     private final String msg;
 
-   MybatisCodeEnum(int code, String msg) {
+   AppExceptionEnum(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

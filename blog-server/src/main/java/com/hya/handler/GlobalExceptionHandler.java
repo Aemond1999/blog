@@ -2,6 +2,7 @@ package com.hya.handler;
 
 
 import com.hya.enums.HttpCodeEnum;
+import com.hya.exception.AppException;
 import com.hya.utils.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -23,7 +24,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public Result handleHttpMessageNotReadableException(
             MissingServletRequestParameterException ex) {
-        return Result.fail( HttpCodeEnum.MISS_PARAM.getCode(), HttpCodeEnum.MISS_PARAM.getMsg());
+        return Result.fail( HttpCodeEnum.MISS_PARAM);
     }
 
     /**
@@ -35,7 +36,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NullPointerException.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handleTypeMismatchException(NullPointerException ex) {
-        return Result.fail(HttpCodeEnum.NULL_POINTER.getCode(), HttpCodeEnum.NULL_POINTER.getMsg());
+        return Result.fail(HttpCodeEnum.NULL_POINTER);
     }
 
     /**
@@ -47,8 +48,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handleUnexpectedServer(Exception ex) {
+        if (ex instanceof AppException) {
+            AppException appException = (AppException) ex;
+            return  Result.fail(appException.getCode(), appException.getMsg());
+        }
 
-        return Result.fail(HttpCodeEnum.SYSTEM_ERROR.getCode(), HttpCodeEnum.SYSTEM_ERROR.getMsg());
+        return Result.fail(HttpCodeEnum.SYSTEM_ERROR);
 
     }
 
