@@ -16,7 +16,9 @@ public enum HttpCodeEnum {
     REQ_MODE_NOT_SUPPORTED(9530, "请求方式不支持"),
     SYSTEM_ERROR(9999, "系统异常"),
     NULL_POINTER(500,"空指针异常"),
-    MISS_PARAM(400,"缺少必要参数");
+    MISS_PARAM(400,"缺少必要参数"),
+    LOGIN_SUCCESS(200, "登陆成功"),
+    REGISTER_SUCCESS(200, "注册成功");
 
 
     /**

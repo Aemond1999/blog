@@ -28,4 +28,5 @@ mybatis-plus:
 #      table-prefix: blog_
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:/mapper/**/*.xml
 
