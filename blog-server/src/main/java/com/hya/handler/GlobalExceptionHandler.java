@@ -48,10 +48,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handleUnexpectedServer(Exception ex) {
-        if (ex instanceof AppException) {
-            AppException appException = (AppException) ex;
+        if (ex instanceof AppException appException) {
             return  Result.fail(appException.getCode(), appException.getMsg());
         }
+
 
         return Result.fail(HttpCodeEnum.SYSTEM_ERROR);
 

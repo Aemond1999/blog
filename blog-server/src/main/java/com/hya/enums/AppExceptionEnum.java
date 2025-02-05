@@ -13,7 +13,8 @@ public enum AppExceptionEnum {
     INVALID_TOKEN(500,"无效令牌"),
     REGISTER_FAIL(500,"注册失败"),
     USER_EXISTED(500,"用户已存在"),
-    MISS_NECESSARY_PARAM(500,"缺少必要参数");
+    MISS_NECESSARY_PARAM(500,"缺少必要参数"),
+    ARTICLE_NOT_EXISTS(500,"不存在该文章");
     /**
      * 状态码
      */

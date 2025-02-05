@@ -5,8 +5,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hya.common.domain.ArticleDo;
 import com.hya.common.dto.PageParamDTO;
+import com.hya.common.vo.ArticleBodyVo;
+import com.hya.common.vo.ArticleDetailVo;
 import com.hya.common.vo.ArticleVo;
+import com.hya.enums.AppExceptionEnum;
+import com.hya.exception.AppException;
 import com.hya.mapper.ArticleMapper;
+import com.hya.service.ArticleBodyService;
 import com.hya.service.ArticleService;
 import com.hya.service.TagService;
 import com.hya.service.UserService;
@@ -26,6 +31,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDo> im
     private TagService tagService;
     @Resource
     private UserService userService;
+    @Resource
+    private ArticleBodyService articleBodyService;
 
     /**
      * 获取所有文章
@@ -39,6 +46,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDo> im
         LambdaQueryWrapper<ArticleDo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.orderByDesc(ArticleDo::getWeight);
         Page<ArticleDo> records = articleMapper.selectPage(page,queryWrapper);
+
         List<ArticleVo> articleVos = copyList(records.getRecords());
         return Result.success(articleVos);
     }
@@ -52,4 +60,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDo> im
         }
         return articles;
     }
+    @Override
+    public Result getArticleDetail(Long id) {
+        ArticleDo article= articleMapper.getArticleById(id);
+        if (article == null) {
+            throw  new AppException(AppExceptionEnum.ARTICLE_NOT_EXISTS);
+        }
+        Long bodyId = article.getBodyId();
+        // 查询文章主体
+        ArticleDetailVo articleDetailVo = copy(article);
+        return Result.success(articleDetailVo);
+    }
+    private ArticleDetailVo copy(ArticleDo article) {
+        ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
+        articleDetailVo.setBody(articleBodyService.getArticleBodyById(article.getBodyId()));
+        return articleDetailVo;
+    }
+
+
 }

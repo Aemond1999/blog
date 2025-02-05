@@ -47,10 +47,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
         return Result.success(userMapper.getUserMsgById(JSON.parseObject(json, UserDo.class).getId()));
     }
 
+   
     @Override
     public Boolean addUser(RegisterParamDto registerParam) {
         return userMapper.addUser(registerParam);
     }
+
 
     @Override
     public UserDo getUserByAccount(String account) {

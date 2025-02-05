@@ -23,7 +23,7 @@ public interface UserMapper extends BaseMapper<UserDo> {
     @Select("select * from blog_user where account =#{account}")
     UserDo getUserByAccount(@Param("account")String account);
 
-    @Insert("insert  into  blog_user(account, password, nickname,avatar,  email,  mobile_phone_number) values (${account},${password},${nickname},${avatar},${ email},${mobilePhoneNumber})")
+    @Insert("insert  into  blog_user(account, password, nickname,avatar,  email,  mobile_phone_number) values (#{account},#{password},#{nickname},#{avatar},#{ email},#{mobilePhoneNumber})")
     Boolean addUser(RegisterParamDto registerParam);
 
 

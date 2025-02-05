@@ -4,32 +4,18 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class ArticleVo {
-
+public class ArticleDetailVo {
     private Long id;
-
     private String title;
-
-    private String summary;
-
     private Integer commentCounts;
-
     private Integer viewCounts;
-
-    private Integer weight;
-
     private LocalDateTime createDate;
-
     private String author;
-//
-//    private ArticleBodyVo body;
+    private ArticleBodyVo body;
     private List<TagVo> tags;
-
-
 }

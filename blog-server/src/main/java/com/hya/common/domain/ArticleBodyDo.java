@@ -8,12 +8,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@TableName("blog_tag")
-
-public class TagDo {
+@TableName("blog_article_body")
+public class ArticleBodyDo {
     private Long id;
-
-    private String avatar;
-
-    private String tagName;
+    private String content;
+    private String contentHtml;
+    private Long articleId;
 }
