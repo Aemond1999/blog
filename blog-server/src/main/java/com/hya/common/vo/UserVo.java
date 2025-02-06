@@ -1,20 +1,14 @@
 package com.hya.common.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-/**
- * 用户个人数据
- */
+@EqualsAndHashCode
 public class UserVo {
-    private String account;
+    private Long id;
     private String avatar;
-    private String email;
     private String nickname;
 }

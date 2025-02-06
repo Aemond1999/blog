@@ -31,7 +31,6 @@ public class ScheduleTask {
      */
     @Scheduled(cron = "0 */1 * * * ?")
     private void updateViewCounts() {
-
         Set<String> keys = stringRedisTemplate.keys(RedisPrefixConstants.VIEW_COUNTS_KEY_PREFIX + "*");
         List<ViewCountsBo> list = new ArrayList<>();
         for (String key : keys) {

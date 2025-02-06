@@ -1,10 +1,6 @@
 package com.hya.controller;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.hya.enums.AppExceptionEnum;
-import com.hya.exception.AppException;
 import com.hya.service.UserService;
-import com.hya.utils.JWTUtils;
 import com.hya.utils.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +22,6 @@ public class UserController {
      */
     @GetMapping("current")
     public Result current(@RequestHeader("Authorization") String token) {
-        return userService.getUserMsgByToken(token);
+        return userService.getLoginUserByToken(token);
     }
 }

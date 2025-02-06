@@ -11,7 +11,9 @@ import org.apache.ibatis.annotations.Param;
 public interface UserService extends IService<UserDo> {
     String getUserNicknameById(@Param("id") Long id);
     UserDo getUserByAccountAndPwd(LoginParamDto loginParamDto);
-    Result getUserMsgByToken(String token);
+    Result getLoginUserByToken(String token);
    Boolean addUser(RegisterParamDto registerParam);
     UserDo getUserByAccount(String account);
+    UserVo getUserVoById(Long id);
+
 }

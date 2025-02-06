@@ -3,17 +3,15 @@ package com.hya.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hya.common.domain.TagDo;
 import com.hya.common.domain.UserDo;
 import com.hya.common.dto.LoginParamDto;
 import com.hya.common.dto.RegisterParamDto;
+import com.hya.common.vo.UserVo;
 import com.hya.constants.RedisPrefixConstants;
 import com.hya.enums.AppExceptionEnum;
 import com.hya.exception.AppException;
-import com.hya.mapper.TagMapper;
 import com.hya.mapper.UserMapper;
 import com.hya.service.UserService;
-import com.hya.utils.JWTUtils;
 import com.hya.utils.Result;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -36,7 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
     }
 
     @Override
-    public Result getUserMsgByToken(String token) {
+    public Result getLoginUserByToken(String token) {
         if (StringUtils.isBlank(token)) {
             throw new AppException(AppExceptionEnum.INVALID_TOKEN);
         }
@@ -44,7 +42,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
         if (StringUtils.isBlank(json)) {
             throw new AppException(AppExceptionEnum.NOT_LOGIN);
         }
-        return Result.success(userMapper.getUserMsgById(JSON.parseObject(json, UserDo.class).getId()));
+        return Result.success(userMapper.getLoginUserById(JSON.parseObject(json, UserDo.class).getId()));
     }
 
    
@@ -57,6 +55,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
     @Override
     public UserDo getUserByAccount(String account) {
         return userMapper.getUserByAccount(account);
+    }
+
+    @Override
+    public UserVo getUserVoById(Long id) {
+        return userMapper.getUserVoById(id);
     }
 
 }

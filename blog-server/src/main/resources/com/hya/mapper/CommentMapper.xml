@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hya.mapper.CommentMapper">
+
+    <resultMap id="commentUserMap" type="com.hya.common.vo.CommentVo">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="createDate" column="create_date"/>
+        <result property="level" column="level"/>
+        <association property="author" javaType="com.hya.common.vo.UserVo">
+            <id property="id" column="id"/>
+            <result property="avatar" column="avatar"/>
+            <result property="nickname" column="nickname"/>
+        </association>
+    </resultMap>
+    <select id="getCommentLevel1ByArticleId" resultMap="commentUserMap">
+        select *
+        from blog_comment
+                 left join blog_user on blog_comment.author_id = blog_user.id
+        where blog_comment.article_id = #{articleId}
+          and level = 1
+    </select>
+    <resultMap id="commentUserMapByStep" type="com.hya.common.vo.CommentVo">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="createDate" column="create_date"/>
+        <result property="level" column="level"/>
+        <association property="author" column="author_id" select="com.hya.mapper.UserMapper.getUserVoById"/>
+        <association property="toUser" column="to_uid" select="com.hya.mapper.UserMapper.getUserVoById"/>
+    </resultMap>
+
+    <select id="getCommentLevel2ByParentId" resultMap="commentUserMapByStep">
+        select *
+        from blog_comment
+        where parent_id = #{parentId} and level = 2
+    </select>
+</mapper>
