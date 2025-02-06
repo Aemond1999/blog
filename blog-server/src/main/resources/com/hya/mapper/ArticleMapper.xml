@@ -3,6 +3,16 @@
 <mapper namespace="com.hya.mapper.ArticleMapper">
 
 
+    <update id="updateBathViewCountsById" parameterType="list">
+        update blog_article
+        set view_counts =
+        <foreach collection="list" item="item" separator="" open="CASE id" close="end">
+            when #{item.id} then #{item.viewCounts}
+        </foreach>
+        where id in
+        <foreach collection="list" open="(" item="item" close=")" separator=",">
+            #{item.id,jdbcType=BIGINT}
+        </foreach>
 
-
+    </update>
 </mapper>
