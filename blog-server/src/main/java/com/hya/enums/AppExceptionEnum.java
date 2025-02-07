@@ -3,6 +3,7 @@ package com.hya.enums;
 public enum AppExceptionEnum {
 
 
+    INSERT_FAIL(500,"添加失败"),
     DELETE_FAIL(500,"删除失败"),
     UPDATE_FAIL(500,"修改失败"),
     ACCOUNT_OR_PWD_ERROR(500,"账号或密码错误"),

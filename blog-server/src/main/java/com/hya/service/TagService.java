@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface TagService  extends IService<TagDo> {
     List<TagVo> getTagsById(Long id);
+    Result getTags();
 }

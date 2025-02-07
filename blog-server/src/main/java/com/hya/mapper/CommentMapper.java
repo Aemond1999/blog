@@ -11,8 +11,8 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
 
-
     List<CommentVo> getCommentLevel1ByArticleId(@Param("articleId") Long articleId);
 
     List<CommentVo> getCommentLevel2ByParentId(@Param("parentId") Long parentId);
+
 }

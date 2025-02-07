@@ -13,6 +13,12 @@
         <foreach collection="list" open="(" item="item" close=")" separator=",">
             #{item.id,jdbcType=BIGINT}
         </foreach>
-
     </update>
+
+    <insert id="addArticleTags">
+        insert into blog_article_tag(article_id,tag_id) values
+        <foreach collection="tags" item="tag" separator=",">
+            (#{tag.articleId},#{tag.tagId})
+        </foreach>
+    </insert>
 </mapper>

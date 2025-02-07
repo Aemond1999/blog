@@ -29,7 +29,7 @@ public class ScheduleTask {
     /**
      * 定时更新评论数
      */
-    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 */10 * * * ?")
     private void updateViewCounts() {
         Set<String> keys = stringRedisTemplate.keys(RedisPrefixConstants.VIEW_COUNTS_KEY_PREFIX + "*");
         List<ViewCountsBo> list = new ArrayList<>();

@@ -7,6 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+/**
+ * 用于更新评论数
+ */
 public class ViewCountsBo {
     private Long id;
     private Integer viewCounts;

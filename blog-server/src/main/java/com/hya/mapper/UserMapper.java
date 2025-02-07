@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface UserMapper extends BaseMapper<UserDo> {
+
     @Select("select nickname from blog_user where id=#{id}")
     String getUserNicknameById(@Param("id") Long id);
 
@@ -21,11 +22,13 @@ public interface UserMapper extends BaseMapper<UserDo> {
 
     @Select("select id, account,avatar,email,nickname from blog_user where id =#{id}")
     LoginUserVo getLoginUserById(@Param("id") Long id);
+
     @Select("select * from blog_user where account =#{account}")
     UserDo getUserByAccount(@Param("account")String account);
 
     @Insert("insert  into  blog_user(account, password, nickname,avatar,  email,  mobile_phone_number) values (#{account},#{password},#{nickname},#{avatar},#{ email},#{mobilePhoneNumber})")
     Boolean addUser(RegisterParamDto registerParam);
+
     @Select("select id, avatar,nickname from blog_user where id =#{id}")
     UserVo getUserVoById(Long id);
 

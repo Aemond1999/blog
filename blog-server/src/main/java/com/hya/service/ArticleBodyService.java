@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ArticleBodyService {
     ArticleBodyVo getArticleBodyById(Long id);
+    Boolean addArticleBody(ArticleBodyDo articleBodyDo);
 }

@@ -43,10 +43,11 @@ public class CommentServiceImpl implements CommentService {
                     JSON.toJSONString(commentParent),
                     RedisTTLConstants.CACHE_COMMENT_TTL,
                     TimeUnit.MINUTES);
+            System.out.println("mysql");
             return Result.success(commentParent);
         }
+        System.out.println("redis");
         List<CommentVo> commentVos = JSON.parseArray(json, CommentVo.class);
-        System.out.println(commentVos);
         return Result.success(commentVos);
     }
 }

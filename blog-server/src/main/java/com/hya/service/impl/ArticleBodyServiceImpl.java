@@ -1,5 +1,6 @@
 package com.hya.service.impl;
 
+import com.hya.common.domain.ArticleBodyDo;
 import com.hya.common.vo.ArticleBodyVo;
 import com.hya.mapper.ArticleBodyMapper;
 import com.hya.service.ArticleBodyService;
@@ -15,5 +16,10 @@ public class ArticleBodyServiceImpl implements ArticleBodyService {
     @Override
     public ArticleBodyVo getArticleBodyById(Long id) {
         return articleBodyMapper.getArticleBodyById( id);
+    }
+
+    @Override
+    public Boolean addArticleBody(ArticleBodyDo articleBodyDo) {
+        return articleBodyMapper.addArticleBody(articleBodyDo);
     }
 }
